@@ -1,6 +1,7 @@
 package pl.sda.register.repository;
 
 import org.springframework.stereotype.Repository;
+import pl.sda.register.exception.DuplicatedUsernameException;
 import pl.sda.register.exception.UserNotFoundException;
 import pl.sda.register.model.User;
 
@@ -28,4 +29,17 @@ public class UserRepository {
                 .findAny()
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
+
+    public void addUser(User user) {
+        users.stream()
+                .filter(user1 -> user1.getUsername().equals(user.getUsername()))
+                .findAny()
+                .ifPresentOrElse(user1 -> throwException(user), () ->users.add(user));
+    }
+
+    private void throwException(User user) {
+        throw new  DuplicatedUsernameException(
+                "User with user name: " + user.getUsername() + "already exist");
+    }
+
 }

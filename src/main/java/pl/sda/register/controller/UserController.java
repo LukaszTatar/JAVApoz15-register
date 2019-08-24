@@ -38,6 +38,8 @@ public class UserController {
 
     @PostMapping("/user")
     public String addUser(@ModelAttribute User user) {
+        ModelAndView modelAndView = new ModelAndView("user");
+        userService.addUser(user);
         //TODO: task is to add user to repository
         return "redirect:/users";
     }
