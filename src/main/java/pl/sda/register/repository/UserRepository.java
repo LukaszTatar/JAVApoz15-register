@@ -19,8 +19,14 @@ public class UserRepository {
         return new HashSet<>(Arrays.asList(new User("login", "Captain", "Jack")));
     }
 
-    public Set<String> findAllUserNames() {
-        return users.stream().map(User::getUsername).collect(Collectors.toSet());
+    public Set<String> findAllUserNames(String firstName) {
+        if (firstName == null) {
+            return users.stream().map(User::getUsername).collect(Collectors.toSet());
+        }
+        return users.stream()
+                .filter(user -> user.getFirstName().equals(firstName))
+                .map(User::getUsername)
+                .collect(Collectors.toSet());
     }
 
     public User findUserByUsername(String username) {
@@ -39,7 +45,7 @@ public class UserRepository {
 
     private void throwException(User user) {
         throw new  DuplicatedUsernameException(
-                "User with user name: " + user.getUsername() + "already exist");
+                "User with user name: " + user.getUsername() + " already exist");
     }
 
 }

@@ -16,9 +16,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ModelAndView usersListView(@RequestParam(required = false) String firstName) {//TODO: task if firstName is not null, filter via it (url structure: /users?firstName=test)
+    public ModelAndView usersListView(@RequestParam(required = false) String firstName) {
         ModelAndView modelAndView = new ModelAndView("users");
-        modelAndView.addObject("users", userService.findAllUserNames());
+        modelAndView.addObject("users", userService.findAllUserNames(firstName));
         return modelAndView;
     }
 
@@ -40,7 +40,11 @@ public class UserController {
     public String addUser(@ModelAttribute User user) {
         ModelAndView modelAndView = new ModelAndView("user");
         userService.addUser(user);
-        //TODO: task is to add user to repository
         return "redirect:/users";
+    }
+    @GetMapping("/user/search")
+    public ModelAndView searchUserByFirstNameView() {
+        ModelAndView modelAndView = new ModelAndView("search");
+        return modelAndView;
     }
 }

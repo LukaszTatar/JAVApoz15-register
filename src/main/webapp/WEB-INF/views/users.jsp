@@ -23,7 +23,9 @@
 	</table>
 	
 	<spring:url value="/user/add" var="addUserFormUrl" />
+	<spring:url value="/user/search" var ="searchUserFormUrl" />
 	<button class="btn btn-primary" onclick="location.href='${addUserFormUrl}'">Add user</button>
+	<button class="btn btn-primary" onclick="location.href='${searchUserFormUrl}'">Search</button>
 
 </body>
 </html>
