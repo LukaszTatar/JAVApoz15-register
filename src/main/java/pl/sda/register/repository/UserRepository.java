@@ -55,10 +55,16 @@ public class UserRepository {
     }
 
     public void deleteUser(String username) {
-        User user1 =users.stream()
+        User user1 = users.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findAny()
                 .get();
         users.remove(user1);
+    }
+
+    public void updateUser(User user) {
+        User foundUser = findUserByUsername(user.getUsername());
+        users.remove(foundUser);
+        users.add(user);
     }
 }

@@ -48,9 +48,25 @@ public class UserController {
         userService.addUser(user);
         return "redirect:/users";
     }
+
     @GetMapping("/user/search")
     public ModelAndView searchUserByFirstNameView() {
         ModelAndView modelAndView = new ModelAndView("search");
         return modelAndView;
+    }
+
+    @GetMapping("/user/update/{username}")
+    public ModelAndView updateUserView(@PathVariable String username) {
+        ModelAndView modelAndView = new ModelAndView("addUser");
+        User foundUser = userService.findUserByUserName(username);
+        modelAndView.addObject("user", foundUser);
+        modelAndView.addObject("update", true);
+        return modelAndView;
+    }
+
+    @PostMapping("/user/update")
+    public String updateUser(@ModelAttribute User user) {
+        userService.updateUser(user);
+        return "redirect:/users/" + user.getUsername();
     }
 }
